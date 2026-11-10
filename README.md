@@ -107,31 +107,17 @@ $ npx tsx src/cli.ts input/sample.txt -l en
 Done: 0 downloaded, 5 skipped (already exist), 0 failed, 1 duplicates ignored.
 ```
 
+**Other languages**
+| Input line | Command | Output file |
+|---|---|---|
+| `Xin chào` | `-l vi` | `vi/sentences/xin-chao__6ccc685a.mp3` |
+| `Đường phố này rất đẹp.` | `-l vi` | `vi/sentences/duong-pho-nay-rat-dep__9fb8f53c.mp3` |
+| `こんにちは` | `-l ja` | `ja/words/763ee191.mp3` |
+| `お元気 ですか` | `-l ja` | `ja/sentences/9171eca6.mp3` |
+| 300-character paragraph (`input/long.txt`) | `-l en` | `en/sentences/learning-a-new-language-takes-patience-and-daily__870b3b5f.mp3` (sent as 2 requests, saved as one 20 s file) |
+
 Vietnamese words such as `Xin chào` contain a space, so they go into `sentences/`. Add
 `--phrase-max-words 2` to put them in `words/`.
-
-### Listen to the sample audio
-These are the real files produced by the runs above, copied into [`docs/audio/`](docs/audio).
-GitHub can't play audio inside a README, so click **▶ Play** to open a file. GitHub's file
-page plays it or offers a download.
-
-| Lang | Input text | Output file | Length | Audio |
-|---|---|---|---|---|
-| en | `Welcome` | `words/welcome.mp3` | 0.94 s | [▶ Play](docs/audio/en/words/welcome.mp3) |
-| en | `apple` | `words/apple.mp3` | 0.84 s | [▶ Play](docs/audio/en/words/apple.mp3) |
-| en | `ice cream` | `sentences/ice-cream__9cf9f6c1.mp3` | 1.03 s | [▶ Play](docs/audio/en/sentences/ice-cream__9cf9f6c1.mp3) |
-| en | `How are you today?` | `sentences/how-are-you-today__14ce9802.mp3` | 1.32 s | [▶ Play](docs/audio/en/sentences/how-are-you-today__14ce9802.mp3) |
-| en | `I'd like a cup of coffee, please.` | `sentences/id-like-a-cup-of-coffee-please__f7616a33.mp3` | 2.57 s | [▶ Play](docs/audio/en/sentences/id-like-a-cup-of-coffee-please__f7616a33.mp3) |
-| en | 300-character paragraph ([`input/long.txt`](input/long.txt)), sent as 2 requests | `sentences/learning-a-new-language-takes-patience-and-daily__870b3b5f.mp3` | 19.97 s | [▶ Play](docs/audio/en/sentences/learning-a-new-language-takes-patience-and-daily__870b3b5f.mp3) |
-| vi | `Xin chào` | `sentences/xin-chao__6ccc685a.mp3` | 1.13 s | [▶ Play](docs/audio/vi/sentences/xin-chao__6ccc685a.mp3) |
-| vi | `Cảm ơn` | `sentences/cam-on__5f91b4d5.mp3` | 0.98 s | [▶ Play](docs/audio/vi/sentences/cam-on__5f91b4d5.mp3) |
-| vi | `Bạn khỏe không?` | `sentences/ban-khoe-khong__b40c4830.mp3` | 1.37 s | [▶ Play](docs/audio/vi/sentences/ban-khoe-khong__b40c4830.mp3) |
-| vi | `Đường phố này rất đẹp.` | `sentences/duong-pho-nay-rat-dep__9fb8f53c.mp3` | 1.97 s | [▶ Play](docs/audio/vi/sentences/duong-pho-nay-rat-dep__9fb8f53c.mp3) |
-| ja | `こんにちは` | `words/763ee191.mp3` | 1.27 s | [▶ Play](docs/audio/ja/words/763ee191.mp3) |
-| ja | `お元気 ですか` | `sentences/9171eca6.mp3` | 1.49 s | [▶ Play](docs/audio/ja/sentences/9171eca6.mp3) |
-
-All files are MP3, 64 kbps, 24 kHz, mono. The input files for the other languages are
-[`input/sample-vi.txt`](input/sample-vi.txt) and [`input/sample-ja.txt`](input/sample-ja.txt).
 
 ## Output and naming
 ```
