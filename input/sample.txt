@@ -1,0 +1,7 @@
+# Sample input: one word or sentence per line. Lines starting with # are ignored.
+Welcome
+apple
+Apple
+ice cream
+How are you today?
+I'd like a cup of coffee, please.

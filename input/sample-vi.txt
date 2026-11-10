@@ -1,0 +1,5 @@
+# Vietnamese sample
+Xin chào
+Cảm ơn
+Bạn khỏe không?
+Đường phố này rất đẹp.
