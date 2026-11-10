@@ -43,6 +43,82 @@ UTF-8 `.txt` file, one entry per line. Blank lines and lines starting with `#` a
 is normalized, and case-insensitive duplicates are skipped and reported. Text longer than 200 chars is
 split at punctuation, sent as several requests, and joined into one MP3.
 
+## Example: input and output
+These results come from a real run on the included sample files.
+
+**Input:** `input/sample.txt`
+```text
+# Sample input: one word or sentence per line. Lines starting with # are ignored.
+Welcome
+apple
+Apple
+ice cream
+How are you today?
+I'd like a cup of coffee, please.
+```
+
+**Command and terminal output**
+```console
+$ npx tsx src/cli.ts input/sample.txt -l en
+duplicate skipped: line 4 "Apple" (same as line 3)
+[1/5] ok      words/apple.mp3
+[2/5] ok      words/welcome.mp3
+[3/5] ok      sentences/ice-cream__9cf9f6c1.mp3
+[4/5] ok      sentences/how-are-you-today__14ce9802.mp3
+[5/5] ok      sentences/id-like-a-cup-of-coffee-please__f7616a33.mp3
+Done: 5 downloaded, 0 skipped (already exist), 0 failed, 1 duplicates ignored.
+Output: output/en/ (manifest.json, manifest.csv)
+```
+
+**Files created**
+```text
+output/en/
+├── manifest.csv
+├── manifest.json
+├── words/
+│   ├── apple.mp3                                       6.6 KB  0.84 s
+│   └── welcome.mp3                                     7.3 KB  0.94 s
+└── sentences/
+    ├── how-are-you-today__14ce9802.mp3                10.3 KB  1.32 s
+    ├── ice-cream__9cf9f6c1.mp3                         8.1 KB  1.03 s
+    └── id-like-a-cup-of-coffee-please__f7616a33.mp3   20.1 KB  2.57 s
+```
+
+**`output/en/manifest.json`** (first entry; there is one entry per file)
+```json
+{
+  "index": 1,
+  "line": 2,
+  "text": "Welcome",
+  "lang": "en",
+  "type": "word",
+  "file": "words/welcome.mp3",
+  "bytes": 7488,
+  "status": "ok"
+}
+```
+`manifest.csv` has the same columns: `index,line,text,lang,type,file,bytes,status,error`.
+
+**Running it again** downloads nothing, because the files already exist:
+```console
+$ npx tsx src/cli.ts input/sample.txt -l en
+[1/5] skipped words/welcome.mp3
+...
+Done: 0 downloaded, 5 skipped (already exist), 0 failed, 1 duplicates ignored.
+```
+
+**Other languages**
+| Input line | Command | Output file |
+|---|---|---|
+| `Xin chào` | `-l vi` | `vi/sentences/xin-chao__6ccc685a.mp3` |
+| `Đường phố này rất đẹp.` | `-l vi` | `vi/sentences/duong-pho-nay-rat-dep__9fb8f53c.mp3` |
+| `こんにちは` | `-l ja` | `ja/words/763ee191.mp3` |
+| `お元気 ですか` | `-l ja` | `ja/sentences/9171eca6.mp3` |
+| 300-character paragraph (`input/long.txt`) | `-l en` | `en/sentences/learning-a-new-language-takes-patience-and-daily__870b3b5f.mp3` (sent as 2 requests, saved as one 20 s file) |
+
+Vietnamese words such as `Xin chào` contain a space, so they go into `sentences/`. Add
+`--phrase-max-words 2` to put them in `words/`.
+
 ## Output and naming
 ```
 output/<lang>/
