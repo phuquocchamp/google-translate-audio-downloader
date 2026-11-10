@@ -1,6 +1,7 @@
-# glow-translate
+# Google Translate Audio Downloader
 
 Bulk-download Google Translate text-to-speech audio (MP3) for words and sentences listed in a `.txt` file.
+One line in, one `.mp3` out, with predictable filenames and a manifest that maps each text to its file.
 
 > ⚠️ This uses `batchexecute?rpcids=jQ1olc`, the **internal, undocumented** endpoint behind the speaker
 > button on translate.google.com. Google may change it or rate-limit it at any time. For stable or
@@ -8,8 +9,11 @@ Bulk-download Google Translate text-to-speech audio (MP3) for words and sentence
 > `src/tts/TtsProvider.ts`, so a new provider can be plugged in there.
 
 ## Setup
+Requires Node.js 22 or newer.
 ```bash
-npm install          # Node >= 22
+git clone https://github.com/phuquocchamp/google-translate-audio-downloader.git
+cd google-translate-audio-downloader
+npm install
 ```
 
 ## Usage
@@ -18,7 +22,10 @@ npx tsx src/cli.ts input/sample.txt                 # English (default)
 npx tsx src/cli.ts input/sample-vi.txt -l vi        # Vietnamese voice
 npx tsx src/cli.ts words.txt -l ja -o ./audio -c 3  # Japanese, custom output, 3 parallel
 npx tsx src/cli.ts input/sample.txt --dry-run       # show planned filenames only
+npx tsx src/cli.ts output/en/failed.txt             # retry the lines that failed last time
 ```
+
+`npm start -- input/sample.txt -l en` works too.
 
 | Option | Default | Meaning |
 |---|---|---|
@@ -50,6 +57,19 @@ output/<lang>/
 - No Latin slug (Japanese, Chinese, emoji): the name is just `<hash8>.mp3`. Look up the text in the manifest.
 - Two different words with the same slug (`resume` / `résumé`): the second one gets `__<hash8>`.
 - There is no `0001_` index prefix on purpose: editing the input would rename every file. The order is kept in the manifest.
+
+## Project structure
+```
+src/
+  cli.ts                 command-line options
+  input/parseInput.ts    .txt → entries (trim, skip comments, dedupe, word/sentence)
+  naming/fileName.ts     entry → safe, stable filename
+  tts/googleWebTts.ts    calls the jQ1olc endpoint, decodes base64 → MP3
+  tts/chunkText.ts       splits text over 200 chars
+  pipeline/run.ts        concurrency, retries, resume, atomic writes
+  pipeline/manifest.ts   manifest.json / manifest.csv / failed.txt
+test/                    vitest suite + one real captured response fixture
+```
 
 ## Development
 ```bash

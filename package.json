@@ -1,7 +1,23 @@
 {
-  "name": "glow-translate",
+  "name": "google-translate-audio-downloader",
   "version": "0.1.0",
   "description": "Bulk download Google Translate TTS audio (MP3) for words and sentences",
+  "keywords": [
+    "google-translate",
+    "tts",
+    "text-to-speech",
+    "mp3",
+    "cli"
+  ],
+  "author": "phuquocchamp <hoangtanphuquoc@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuquocchamp/google-translate-audio-downloader.git"
+  },
+  "homepage": "https://github.com/phuquocchamp/google-translate-audio-downloader#readme",
+  "bugs": {
+    "url": "https://github.com/phuquocchamp/google-translate-audio-downloader/issues"
+  },
   "type": "module",
   "private": true,
   "bin": {
