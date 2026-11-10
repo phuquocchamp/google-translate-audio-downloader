@@ -43,10 +43,7 @@ UTF-8 `.txt` file, one entry per line. Blank lines and lines starting with `#` a
 is normalized, and case-insensitive duplicates are skipped and reported. Text longer than 200 chars is
 split at punctuation, sent as several requests, and joined into one MP3.
 
-## Example: input and output
-These results come from a real run on the included sample files.
-
-**Input:** `input/sample.txt`
+Example input file, `input/sample.txt`:
 ```text
 # Sample input: one word or sentence per line. Lines starting with # are ignored.
 Welcome
@@ -56,6 +53,9 @@ ice cream
 How are you today?
 I'd like a cup of coffee, please.
 ```
+
+## Example: input and output
+These results come from a real run on `input/sample.txt` above.
 
 **Command and terminal output**
 ```console
